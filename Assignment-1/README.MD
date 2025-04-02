@@ -1,17 +1,12 @@
-# Assignments Overview
+# Assignment 1: Sorting and Removing Duplicates in a PS File
 
-This document outlines multiple assignments related to JCL, COBOL, REXX, VSAM, and GDG. The tasks include file handling, sorting, duplicate elimination, conditional job execution, and VSAM/GDG management.
+## Overview
+This assignment involves creating a Physical Sequential (PS) file with 100 records, out of which 10 records are duplicates. We will write a JCL SORT job to:
 
-## Assignment #1: Sorting & Duplicate Elimination (JCL)
-**Objective:**
-Manually create a Physical Sequential (PS) file using ISPF 3.2, containing 100 records of 80 bytes each. The primary key is between columns 13-20. Among these, 10 records are duplicates.
-
-**Task:**
-Use JCL SORT utility to:
 - Eliminate duplicate records
-- Sort the remaining 90 records based on the primary key
+- Sort the remaining records based on the primary key (columns 13-20)
 
-**Folder Structure:**
+## Folder Structure
 ```
 Assignment1/
 │-- SORTJOB.jcl              # JCL script to perform sorting and deduplication
@@ -19,173 +14,37 @@ Assignment1/
 │-- userid.JCL.SORTOUT       # Output file with sorted and unique records
 ```
 
-**Steps to Complete the Assignment:**
-1. **Create the Input File (SORTIN)**
-   - Open ISPF (Interactive System Productivity Facility).
-   - Navigate to Option 3.2 (Data Set Utility) to create a new PS file.
-   - Enter the dataset name `userid.JCL.SORTIN` and specify:
-     - RECFM: FB (Fixed Block)
-     - LRECL: 80 (Record Length of 80 bytes)
-     - BLKSIZE: 800 (Optional)
-   - Save the dataset.
-   - Edit `userid.JCL.SORTIN` using ISPF 3.4 and manually enter 100 records.
-   - Ensure that the primary key is located in columns 13-20.
-   - Include 10 duplicate records and ensure the data is in random order.
+## Steps to Complete the Assignment
 
-2. **Write the JCL Job (SORTJOB.jcl)**
-   - Inside the `userid.JCL` folder, create a new JCL script named `SORTJOB.jcl`.
-   - Open the file and enter the JCL SORT utility script to:
-     - Read from `userid.JCL.SORTIN`
-     - Remove duplicate records
-     - Sort the unique records based on columns 13-20
-     - Write the output to `userid.JCL.SORTOUT`
+### Step 1: Create the Input File (SORTIN)
+1. Open ISPF (Interactive System Productivity Facility).
+2. Navigate to Option 3.2 (Data Set Utility) to create a new PS file.
+3. Enter the dataset name `userid.JCL.SORTIN` and specify:
+   - **RECFM**: FB (Fixed Block)
+   - **LRECL**: 80 (Record Length of 80 bytes)
+   - **BLKSIZE**: 800 (Optional)
+4. Save the dataset.
+5. Edit `userid.JCL.SORTIN` using ISPF 3.4 and manually enter 100 records.
+6. Ensure that the primary key is located in columns 13-20.
+7. Include 10 duplicate records and ensure the data is in random order.
 
-3. **Submit the Job**
-   - Open the JCL file `SORTJOB.jcl`.
-   - Submit the job.
-   - Check the Job Status in the SDSF (Option S.ST).
-   - If the job completes successfully (`MAXCC = 0`), proceed to the next step.
+### Step 2: Write the JCL Job (SORTJOB.jcl)
+1. Inside the `userid.JCL` folder, create a new JCL script named `SORTJOB.jcl`.
+2. Open the file and enter the JCL SORT utility script to:
+   - Read from `userid.JCL.SORTIN`
+   - Remove duplicate records
+   - Sort the unique records based on columns 13-20
+   - Write the output to `userid.JCL.SORTOUT`
 
-4. **Verify the Output File (SORTOUT)**
-   - Navigate to ISPF 3.4.
-   - Open the dataset `userid.JCL.SORTOUT`.
-   - Confirm that:
-     - The duplicate records have been removed.
-     - The remaining 90 records are sorted by the primary key (columns 13-20).
+### Step 3: Submit the Job
+1. Open the JCL file `SORTJOB.jcl`.
+2. Right-click on `SORTJOB.jcl` and select **Submit Job**.
+3. Check the Job Status in the SDSF (Option `S.ST`).
+4. If the job completes successfully (**MAXCC = 0**), proceed to the next step.
 
-**Concepts Covered:**
-- File handling
-- Sorting in JCL
-- Duplicate elimination
-
-## Assignment #2: File Matching (COBOL)
-**Objective:**
-Create two PS files:
-- **File1:** 50 records, with the primary key in columns 13-20.
-- **File2:** 50 records, with the primary key in columns 21-28.
-
-**Task:**
-Write a COBOL program to:
-- Read both files
-- Identify matching records based on primary keys
-- Write matched records to File3
-
-**Concepts Covered:**
-- File processing in COBOL
-- Record matching logic
-
-## Assignment #3: Sorting & Duplicate Removal (REXX)
-**Objective:**
-Create a PS file with 120 records of 100 bytes each, with a primary key in columns 25-32. There are 15 duplicate records.
-
-**Task:**
-Write a REXX script to:
-- Remove duplicate records
-- Sort the remaining 105 records based on the primary key
-
-**Concepts Covered:**
-- REXX scripting
-- File handling & sorting
-- Data cleanup
-
-## Assignment #4: Conditional Sorting & Copying (JCL)
-**Objective:**
-Write a JCL job to:
-- Copy a PS/PO file into an output file in descending order
-- Compare the total record count before and after sorting
-- Keep the output file only if sorting is successful
-- Print an error message if sorting fails
-
-**Concepts Covered:**
-- SORT utility in JCL
-- Conditional job execution
-- Error handling
-
-## Assignment #5: VSAM KSDS Handling (COBOL)
-**Objective:**
-Create a VSAM KSDS (Key-Sequenced Data Set) with:
-- **Key:** Customer ID (columns 1-8)
-- **Data:**
-  - Customer Name (columns 9-40)
-  - Address (columns 41-100)
-
-**Task:**
-Write a COBOL program to:
-- Insert 20 customer records into KSDS
-- Display records in ascending order
-- Search for a specific Customer ID and display the corresponding record
-
-**Concepts Covered:**
-- VSAM KSDS creation & access
-- COBOL file handling
-
-## Assignment #6: GDG Management & Archiving (JCL)
-**Objective:**
-Create a GDG (Generation Data Group) base to store daily transaction logs.
-
-Each generation contains 100-byte records with the structure:
-- Columns 1-10: Transaction ID
-- Columns 11-30: Transaction Date
-- Columns 31-100: Transaction Details
-
-**Task:**
-Write a JCL job to:
-- Add a new generation with 10 sample transactions
-- Use IDCAMS to list all existing generations
-- Archive the last 3 generations into a PS file and then delete them
-
-**Concepts Covered:**
-- GDG base creation
-- Archiving and cleanup using JCL
-
-## Assignment #7: JCL & VSAM Operations
-**Objective:**
-Create and manage VSAM KSDS via JCL.
-
-**Task:**
-Write a JCL job to:
-1. Create a VSAM KSDS file using IDCAMS
-2. Load a pre-existing PS file into KSDS
-3. Run LISTCAT on KSDS and analyze the output
-
-**Concepts Covered:**
-- VSAM KSDS creation
-- Loading and listing datasets in JCL
-
-## Assignment #8: GDG Management & Concatenation (JCL/REXX)
-**Objective:**
-Create a GDG base and manipulate multiple generations.
-
-**Task:**
-- Create a GDG base with max generations.
-- Write records into four generations (each with 4 records, LRECL=40).
-- Write a REXX script or SORT JCL to:
-  - Concatenate GDG(+1) and GDG(+4) into one PS file (LRECL=80, total records=4)
-  - Concatenate GDG(+2) and GDG(+3) into another PS file (LRECL=80, total records=4)
-
-**Concepts Covered:**
-- GDG file handling
-- Concatenation of GDG generations
-- Data management using REXX/JCL
-
-## Summary
-These assignments provide hands-on experience with:
-- **JCL:** Sorting, data processing, VSAM, GDG
-- **COBOL:** File handling, record matching
-- **REXX:** Scripting for file operations
-- **IDCAMS:** VSAM and GDG management
-
-By completing these tasks, you will strengthen your understanding of mainframe file handling, job execution, and data manipulation techniques.
-
-## Resources Required
-- Mainframe System with TSO/ISPF access
-- JCL, COBOL, and REXX compilers
-- Dataset allocation permissions
-- Access to SORT and IDCAMS utilities
-
-## Instructions
-1. Allocate necessary datasets using ISPF 3.2.
-2. Follow the assignment tasks step by step.
-3. Run the JCL/COBOL/REXX programs on the mainframe.
-4. Verify the output using SDSF (System Display and Search Facility).
-5. Troubleshoot errors using system logs.
+### Step 4: Verify the Output File (SORTOUT)
+1. Navigate to ISPF 3.4.
+2. Open the dataset `userid.JCL.SORTOUT`.
+3. Confirm that:
+   - The duplicate records have been removed.
+   - The remaining 90 records are sorted by the primary key (columns 13-20).
