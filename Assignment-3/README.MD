@@ -17,7 +17,7 @@ The objective is to write a **REXX program** to:
 ## 📂 Folder Structure
 ```
 Assignment3/
-│-- processRecords.rexx      # REXX script to remove duplicates and sort records
+│-- remove_sort_records.rexx      # REXX script to remove duplicates and sort records
 │-- input.txt                # Input PS file with 120 records (including duplicates)
 │-- output.txt               # Output file with sorted and unique records
 ```
@@ -50,7 +50,7 @@ Assignment3/
 
 ### 🔹 Step 3: Execute the REXX Script  
 1. Open the **TSO Command Prompt**.  
-2. Navigate to the directory containing **`REMOVE_SORT.rexx`**.  
+2. Navigate to the directory containing **`remove_sort_records.rexx`**.  
 3. Run the REXX script using:  
    ```rexx
-   EXEC 'userid.REXX.REMOVE_SORT'
+   EXEC 'userid.REXX.remove_sort_records'
