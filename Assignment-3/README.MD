@@ -1,56 +1,32 @@
-# **README**
-# Assignment 3: Sorting and Removing Duplicates in a PS File Using REXX
+# 🔄 REXX: Remove Duplicates and Sort by Key
 
-## Overview
-This assignment involves creating a Physical Sequential (PS) file with **120 records**, each **100 bytes long**. The records contain a **primary key located between columns 25 and 32**.  
-Among the 120 records:  
-- **15 are duplicates**  
-- **105 are unique**  
-- **Records are stored in random order**  
+This REXX script reads records from a dataset, removes duplicates based on a key (columns 25–32), sorts the remaining records in ascending order of that key, and writes the output to another dataset.
 
-The objective is to write a **REXX program** to:  
-✅ **Remove duplicate records**  
-✅ **Sort the remaining records based on the primary key (columns 25-32)**  
+## 📌 Problem Statement
 
----
+Eliminate duplicate records in a flat file and sort the unique records using a key present at a fixed position.
 
-## 📂 Folder Structure
-```
-Assignment3/
-│-- remove_sort_records.rexx      # REXX script to remove duplicates and sort records
-│-- input.txt                # Input PS file with 120 records (including duplicates)
-│-- output.txt               # Output file with sorted and unique records
-```
+## 📁 Files
 
-## 📝 Steps to Complete the Assignment  
+- `SORTREC.rexx` - Main REXX script
+- Input dataset: `Z67427.REXX.INPUT`
+- Output dataset: `Z67427.REXX.OUTPUT`
 
-### 🔹 Step 1: Create the Input File (PSINPUT)  
-1. **Open ISPF (Interactive System Productivity Facility).**  
-2. Navigate to **Option 3.2 (Data Set Utility)** to create a new PS file.  
-3. Enter the dataset name **`userid.DATA.PSINPUT`** and specify:  
-   - **RECFM:** FB (Fixed Block)  
-   - **LRECL:** 100 (Record Length of 100 bytes)  
-   - **BLKSIZE:** 1000 (Optional)  
-4. Save the dataset.  
-5. **Edit `userid.DATA.PSINPUT` using ISPF 3.4** and manually enter **120 records**:  
-   - Ensure the **primary key is located in columns 25-32**.  
-   - Include **15 duplicate records** and keep the records in **random order**.  
+## 📥 Input Format
 
----
+- Fixed-length records (RECFM=FB), LRECL=100
+- Key for duplicate removal and sorting is in columns 25–32
 
-### 🔹 Step 2: Write the REXX Script (REMOVE_SORT.rexx)  
-1. Inside the **`Assignment3/`** folder, create a new **REXX script** named **`REMOVE_SORT.rexx`**.  
-2. Open the file and write a **REXX program** to:  
-   - Read records from **`userid.DATA.PSINPUT`**.  
-   - Identify and **remove duplicate records**.  
-   - **Sort** the remaining **unique records** based on the primary key (columns **25-32**).  
-   - Write the processed records to **`userid.DATA.PSOUTPUT`**.  
+## 🚀 How to Run
 
----
+1. Upload `SORTREC.rexx` to your PDS (e.g. `Z67427.SOURCE(SORTREC)`)
+2. Ensure input dataset `Z67427.REXX.INPUT` exists
+3. Run using Zowe CLI: zowe tso send as {my-as-key} --data "exec 'Z67427.SOURCE(SORTREC)'", where {my-as-key} is the key obtained from zowe tso start as.
+4. View output: zowe files view data-set "Z67427.REXX.OUTPUT"
 
-### 🔹 Step 3: Execute the REXX Script  
-1. Open the **TSO Command Prompt**.  
-2. Navigate to the directory containing **`remove_sort_records.rexx`**.  
-3. Run the REXX script using:  
-   ```rexx
-   EXEC 'userid.REXX.remove_sort_records'
+## ✅ Features
+
+- File I/O using `LINEIN` and `LINEOUT`
+- Duplicate detection using associative arrays
+- Key-based sorting
+- TSO command integration
